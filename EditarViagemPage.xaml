@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             x:Class="PlanejamentoDeViagem.EditarViagemPage"
+             Title="Editar Viagem">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+
+            <Label Text="Destino" FontAttributes="Bold" TextColor="#D81414"/>
+            <!-- Campo para edição do destino da viagem -->
+            <Entry x:Name="TxtDestino" Placeholder="Destino" BackgroundColor="#D9D9D9"/>
+
+            <Label Text="Data de ida" FontAttributes="Bold" TextColor="#D81414"/>
+            <!-- Edição da data de ida da viagem -->
+            <DatePicker x:Name="DataIda" BackgroundColor="#D9D9D9" MinimumDate="{x:Static sys:DateTime.Now}"/>
+
+            <Label Text="Data de retorno" FontAttributes="Bold" TextColor="#D81414"/>
+            <!-- Edição da data de retorno da viagem -->
+            <DatePicker x:Name="DataVolta" BackgroundColor="#D9D9D9" MinimumDate="{x:Static sys:DateTime.Now}"/>
+
+            <Label Text="Motivo" FontAttributes="Bold" TextColor="#D81414"/>
+            <!-- Lista de motivos -->
+            <Picker x:Name="PickerMotivo" BackgroundColor="#D9D9D9">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Passeio</x:String>
+                        <x:String>Trabalho</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Label Text="Forma de Transporte" FontAttributes="Bold" TextColor="#D81414"/>
+            <!-- Lista de transportes -->
+            <Picker x:Name="PickerTransporte" SelectedIndexChanged="OnPickerTransporteSelectedIndexChanged" BackgroundColor="#D9D9D9">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Avião</x:String>
+                        <x:String>Carro</x:String>
+                        <x:String>Onibus</x:String>
+                        <x:String>Outro</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Label Text="Local de estadia" FontAttributes="Bold" TextColor="#D81414"/>
+            <!-- Campo para edição do local de estadia do usuário durante a viagem -->
+            <Entry x:Name="TxtEstadia" Placeholder="Local de estadia" BackgroundColor="#D9D9D9"/>
+
+            <Label Text="Código da passagem" FontAttributes="Bold" TextColor="#D81414"/>
+            <!-- Campo para edição do código da passagem -->
+            <Entry x:Name="TxtCodigoPassagem" Placeholder="Código da passagem" Keyboard="Numeric" BackgroundColor="#D9D9D9"/>
+
+            <Label Text="Código da reserva na estadia" FontAttributes="Bold" TextColor="#D81414"/>
+            <!-- Campo para edição do código da reserva na estadia do usuário durante a viagem -->
+            <Entry x:Name="TxtCodigoReserva" Placeholder="Código da reserva na estadia" Keyboard="Numeric" BackgroundColor="#D9D9D9"/>
+
+            <!-- Informações adicionais sobre a viagem. Caso o meio de transporte seja "Avião", o StackLyout abaixo se tornará visível para edição das informações -->
+            <StackLayout x:Name="AeroportoInfo" IsVisible="False">
+                <Label Text="Aeroporto de ida" FontAttributes="Bold" TextColor="#D81414"/>
+                <Entry x:Name="TxtAeroportoIda" Placeholder="Aeroporto de ida" BackgroundColor="#D9D9D9"/>
+                <Label Text="Aeroporto de chegada" FontAttributes="Bold" TextColor="#D81414"/>
+                <Entry x:Name="TxtAeroportoChegada" Placeholder="Aeroporto de chegada" BackgroundColor="#D9D9D9"/>
+                <Label Text="Cia aérea" FontAttributes="Bold" TextColor="#D81414"/>
+                <Entry x:Name="TxtCiaAerea" Placeholder="Cia Aérea" BackgroundColor="#D9D9D9"/>
+            </StackLayout>
+
+            <!-- Botão que realiza o salvamento da viagem editada -->
+            <Button Text="Salvar" Clicked="OnSalvarViagemClicked" CornerRadius="15" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

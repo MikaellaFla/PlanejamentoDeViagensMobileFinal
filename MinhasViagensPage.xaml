@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlanejamentoDeViagem.MinhasViagensPage"
+             Title="Minhas Viagens"
+             >
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10">
+            <StackLayout>
+                <!-- Campo para pesquisar uma viagem através da inserção de seu destino -->
+                <SearchBar x:Name="SearchBar" Placeholder="Pesquisar por destino" 
+                   TextChanged="OnSearchBarTextChanged"/>
+                <!-- CollectionView apresentando todas as informações de uma viagem -->
+                <CollectionView x:Name="CollectionViewControl">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" Spacing="5">
+                                <Label Text="Destino:" FontSize="Small" TextColor="#F0C01D" FontAttributes="Bold"/>
+                                <Label Text="{Binding Destino}" FontSize="Small" FontAttributes="Bold"/>
+                                <Label Text="Data de Ida:" FontSize="Small" TextColor="#D81414" FontAttributes="Bold"/>
+                                <Label Text="{Binding DataIda}" FontSize="Small" />
+                                <Label Text="Data de Volta:" FontSize="Small" TextColor="#D81414" FontAttributes="Bold"/>
+                                <Label Text="{Binding DataVolta}" FontSize="Small" />
+                                <Label Text="Motivo:" FontSize="Small" TextColor="#D81414" FontAttributes="Bold"/>
+                                <Label Text="{Binding Motivo}" FontSize="Small" />
+                                <Label Text="Forma de Transporte:" FontSize="Small" TextColor="#D81414" FontAttributes="Bold"/>
+                                <Label Text="{Binding Transporte}" FontSize="Small" />
+                                <Label Text="Local de Estadia:" FontSize="Small" TextColor="#D81414" FontAttributes="Bold"/>
+                                <Label Text="{Binding Estadia}" FontSize="Small" />
+                                <Label Text="Código da Passagem:" FontSize="Small" TextColor="#D81414" FontAttributes="Bold"/>
+                                <Label Text="{Binding CodigoPassagem}" FontSize="Small" />
+                                <Label Text="Código de Reserva da Estadia:" FontSize="Small" TextColor="#D81414" FontAttributes="Bold"/>
+                                <Label Text="{Binding CodigoReserva}" FontSize="Small" />
+                                <Label Text="Aeroporto de Ida:" FontSize="Small" TextColor="#D81414" FontAttributes="Bold"/>
+                                <Label Text="{Binding AeroportoIda}" FontSize="Small" IsVisible="{Binding Transporte, Converter={StaticResource TransporteToAeroportoConverter}}" />
+                                <Label Text="Aeroporto de Chegada:" FontSize="Small" TextColor="#D81414" FontAttributes="Bold"/>
+                                <Label Text="{Binding AeroportoChegada}" FontSize="Small" IsVisible="{Binding Transporte, Converter={StaticResource TransporteToAeroportoConverter}}" />
+                                <Label Text="Cia Áerea:" FontSize="Small" TextColor="#D81414" FontAttributes="Bold"/>
+                                <Label Text="{Binding CiaAerea}" FontSize="Small" IsVisible="{Binding Transporte, Converter={StaticResource TransporteToAeroportoConverter}}" />
+                                <Label Text="Itinerários:" FontSize="Small" TextColor="#D81414" FontAttributes="Bold"/>
+                                <!-- Sub CollectionView juntamente de uma Grid destinada aos itinerários e seus botões de ações -->
+                                <CollectionView ItemsSource="{Binding Itinerarios}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Padding="3">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                   
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <!-- Apresentação das informações dos itinerários -->
+                                                <Label Text="Título:" Grid.Row="0" Grid.Column="0" FontSize="Micro" TextColor="#D81414" FontAttributes="Bold"/>
+                                                <Label Text="{Binding Titulo}" Grid.Row="1" Grid.Column="0" />
+                                                <Label Text="Data:" Grid.Row="2" Grid.Column="0" FontSize="Micro" TextColor="#D81414" FontAttributes="Bold"/>
+                                                <Label Text="{Binding Data, StringFormat='{0:d}'}" Grid.Row="3" Grid.Column="0" />
+                                                <Label Text="Hora:" Grid.Row="4" Grid.Column="0" FontSize="Micro"  TextColor="#D81414" FontAttributes="Bold"/>
+                                                <Label Text="{Binding Hora, StringFormat='{0:t}'}" Grid.Row="5" Grid.Column="0" />
+                                                <Label Text="Local:" Grid.Row="6" Grid.Column="0" FontSize="Micro" TextColor="#D81414" FontAttributes="Bold"/>
+                                                <Label Text="{Binding Local}" Grid.Row="7" Grid.Column="0" />
+
+                                                <!-- StackLayout dos botões de ações referentes a cada itinerário adicionado -->
+                                                <StackLayout Orientation="Horizontal" Grid.Row="8" Grid.Column="1" VerticalOptions="Center">
+                                                    <Button Text="Editar" Margin="5,5,5,5" Clicked="OnEditarItinerarioClicked" />
+                                                    <Button Text="Remover" Margin="5,5,5,5" Clicked="OnRemoverItinerarioClicked" />
+                                                </StackLayout>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+
+                                <!-- Botões de ações gerais de cada viagem -->
+                                <!-- Botão de adicionar novo itinerário para selecionada viagem -->
+                                <Button Text="Adicionar Itinerário" Margin="5,5,5,5" BackgroundColor="#D81414" Clicked="OnAdicionarItinerarioClicked" />
+                                <!-- Botão de editar viagem -->
+                                <Button x:Name="Editar" Margin="5,5,5,5" BackgroundColor="Orange" Clicked="Editar_Clicked" Command="{Binding Id}" Text="Editar" />
+                                <!-- Botão de excluir viagem -->
+                                <Button x:Name="Excluir" Margin="5,5,5,5" BackgroundColor="#D81414" Clicked="Excluir_Clicked" Command="{Binding Id}" Text="Excluir" />
+                        </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+            </StackLayout>
+    </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
